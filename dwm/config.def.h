@@ -66,7 +66,7 @@ static const char   *shutcmd[] = { "systemctl", "poweroff", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
-	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
+	{ MODKEY,                       XK_r,      spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
     { ControlMask|Mod1Mask,         XK_r,      spawn,          {.v = rebootcmd } },
 	{ ControlMask|Mod1Mask,         XK_q,      spawn,          {.v = shutcmd } },
