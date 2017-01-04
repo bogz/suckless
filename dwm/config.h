@@ -66,10 +66,13 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "urxvtc", NULL };
+static const char *lockcmd[]  = { "i3lock-fancy", NULL };
+static const char *webcmd[]  = { "firefox", NULL};
+static const char *thunarcmd[]  = { "thunar", NULL };
 static const char *rebootcmd[] = { "systemctl", "reboot", NULL };
 static const char   *shutcmd[] = { "systemctl", "poweroff", NULL };
-static const char *volupcmd[] = {"pactl", "set-sink-volume", "1", "+5%", NULL };
-static const char *voldwncmd[] = {"pactl", "set-sink-volume", "1", "-5%", NULL };
+static const char *volupcmd[] = { "pactl", "set-sink-volume", "1", "+2%", NULL };
+static const char *voldwncmd[] = { "pactl", "set-sink-volume", "1", "-2%", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -77,8 +80,11 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
     { ControlMask|Mod1Mask,         XK_r,      spawn,          {.v = rebootcmd } },
 	{ ControlMask|Mod1Mask,         XK_q,      spawn,          {.v = shutcmd } },
+	{ ControlMask|Mod1Mask,         XK_l,      spawn,          {.v = lockcmd } },
 	{ Mod1Mask,                     XK_Up,     spawn,          {.v = volupcmd} },
 	{ Mod1Mask,                     XK_Down,   spawn,          {.v = voldwncmd} },
+	{ MODKEY,                       XK_q,      spawn,          {.v = webcmd} },
+	{ MODKEY,                       XK_e,      spawn,          {.v = thunarcmd} },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
