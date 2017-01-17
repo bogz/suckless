@@ -2,14 +2,14 @@
 
 /* appearance */
 static const char *fonts[] = {
-	"Dejavu Sans Mono:medium:size=10"
+	"monospace:size=10"
 };
 static const char dmenufont[]       = "monospace:size=10";
 static const char normbordercolor[] = "#444444";
-static const char normbgcolor[]     = "#3C3F41";
+static const char normbgcolor[]     = "#222222";
 static const char normfgcolor[]     = "#bbbbbb";
-static const char selbordercolor[]  = "#67b1ae";
-static const char selbgcolor[]      = "#555555";
+static const char selbordercolor[]  = "#005577";
+static const char selbgcolor[]      = "#005577";
 static const char selfgcolor[]      = "#eeeeee";
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
@@ -31,7 +31,7 @@ static const Rule rules[] = {
 	/* class      instance    title       tags mask     isfloating   monitor */
 	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
 	{ "Firefox",  NULL,       NULL,       1 << 1,       0,           -1 },
-	{ "pycharm",  NULL,       NULL,       1 << 3,       0,           -1 },
+	{ "Pycharm",  NULL,       NULL,       1 << 3,       0,           -1 },
 	{ "Skype",    NULL,       NULL,       1 << 2,       1,           -1 },
 	{ "Stremio",  NULL,       NULL,       1 << 2,       1,           -1 },
 };

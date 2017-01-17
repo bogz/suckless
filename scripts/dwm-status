@@ -1,0 +1,112 @@
+#!/usr/bin/env bash
+# Status script for dwm
+# colours: 01:normal 02:white 03:red 04:green 05:yellow 06:blue
+# 07:cyan 08:magenta 09:grey
+
+# Copyright (c) 2013-2016 Jason W Ryan
+# The MIT License (MIT) http://opensource.org/licenses/MIT
+
+
+music(){
+  track="$(mpc current)"
+  artist="${track%%- *}"
+  title="${track#*- }"
+  [[ -n $artist ]] && printf "%b" "• $artist - $title "
+}
+
+vol(){
+  vol="$(pactl list sinks | grep 'Volume' |awk 'FNR == 3 {print $5}')"
+  printf "%b" "$vol"
+}
+
+bat(){
+  onl="$(</sys/class/power_supply/AC/online)"
+  charge="$(</sys/class/power_supply/BAT0/capacity)"
+  if [[ $onl -eq 0 && $charge -ge 15 ]]; then
+    printf "%b" "BAT \x04$charge%\x01"
+  elif [[ $onl -eq 0 && $charge -le 14 ]]; then
+    printf "%b" "BAT $charge%"
+  else
+    printf "%b" "AC $charge%"
+  fi
+}
+
+mem(){
+  mem="$(awk '/^Mem/ {print $3}' <(free -m))"
+  printf "%b" "$mem"
+}
+
+# CPU line courtesy Procyon:
+# https://bbs.archlinux.org/viewtopic.php?pid=874333#p874333
+cpu(){
+  read cpu a b c previdle rest < /proc/stat
+  prevtotal=$((a+b+c+previdle))
+  sleep 0.5
+  read cpu a b c idle rest < /proc/stat
+  total=$((a+b+c+idle))
+  cpu="$((100*( (total-prevtotal) - (idle-previdle) ) / (total-prevtotal) ))"
+  printf "%b" "$cpu"
+}
+
+hdd(){
+  hd=( $(awk '
+    {i=$5} /boot/ {a=i}; /root/ {b=i}; /home/ {c=i}; /media/ {d=i}
+    END {if (NR>=11) print a,b,c,d; else print a,b,c}
+           ' <(df -P)) )
+  drives="${#hd[@]}"
+  if (( drives > 3 )); then
+    printf "%b " "${hd[@]:0:3} ${hd[@]:3:1}"
+  else
+    printf "%b " "${hd[@]}"
+  fi
+}
+
+eml(){
+  maildirs="$HOME/.mail/*/INBOX/new/"
+  ml="$(find $maildirs -type f | wc -l)"
+  if (( ml > 0 )); then
+    printf "%b" "\x03$ml\x01"
+  else
+    printf "0"
+  fi
+}
+
+pac(){
+  pup="$(pacman -Qqu --dbpath /tmp/aur/ | wc -l)"
+  if (( pup > 0 )); then
+    printf "%b" "\x05$pup\x01"
+  else
+    printf "0"
+  fi
+}
+
+ups(){
+  ups="$(wc -l < /tmp/aur*)"
+  if (( ups > 0 )); then
+    printf "%b" "\x05$ups\x01"
+  else
+    printf "0"
+  fi
+}
+
+aur(){
+   aur="$(awk '$0 !~ /^No /' /tmp/aurphans* | wc -l)"
+   if (( aur > 0 )); then
+     printf "%b" "\x03 ∆\x01"
+   fi
+}
+
+int(){
+  host google.com>/dev/null &&
+  printf "%b" "ON" || printf "%b" "NO"
+}
+
+dte(){
+  dte="$(date "+%T_%m-%d")"
+  printf "%b" "$dte"
+}
+
+# Pipe to status bar
+#xsetroot -name "$(music) • CPU $(cpu) • MEM $(mem) • HDD $(hdd)\
+#• NET $(int) • $(dte) • VOL $(vol) "
+xsetroot -name "$(music) • HDD $(hdd) • $(dte) • VOL $(vol) "
