@@ -34,6 +34,7 @@ static const Rule rules[] = {
 	{ "pycharm",  NULL,       NULL,       1 << 3,       0,           -1 },
 	{ "Skype",    NULL,       NULL,       1 << 2,       1,           -1 },
 	{ "Stremio",  NULL,       NULL,       1 << 2,       1,           -1 },
+	{  NULL,      NULL,      "scratchpad",     0,       1,           -1 },
 };
 
 /* layout(s) */
@@ -70,21 +71,23 @@ static const char *lockcmd[]  = { "i3lock-fancy", NULL };
 static const char *webcmd[]  = { "firefox", NULL};
 static const char *thunarcmd[]  = { "thunar", NULL };
 static const char *rebootcmd[] = { "systemctl", "reboot", NULL };
-static const char   *shutcmd[] = { "systemctl", "poweroff", NULL };
+static const char *shutcmd[] = { "systemctl", "poweroff", NULL };
 static const char *volupcmd[] = { "pactl", "set-sink-volume", "1", "+2%", NULL };
 static const char *voldwncmd[] = { "pactl", "set-sink-volume", "1", "-2%", NULL };
+static const char *padcmd[] = { "urxvtc", "-title", "scratchpad", "-geometry", "56x10-30+40", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_r,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
-    { ControlMask|Mod1Mask,         XK_r,      spawn,          {.v = rebootcmd } },
+        { ControlMask|Mod1Mask,         XK_r,      spawn,          {.v = rebootcmd } },
 	{ ControlMask|Mod1Mask,         XK_q,      spawn,          {.v = shutcmd } },
 	{ ControlMask|Mod1Mask,         XK_l,      spawn,          {.v = lockcmd } },
 	{ Mod1Mask,                     XK_Up,     spawn,          {.v = volupcmd} },
 	{ Mod1Mask,                     XK_Down,   spawn,          {.v = voldwncmd} },
 	{ MODKEY,                       XK_q,      spawn,          {.v = webcmd} },
 	{ MODKEY,                       XK_e,      spawn,          {.v = thunarcmd} },
+	{ ControlMask|Mod1Mask,         XK_p,      spawn,          {.v = padcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
