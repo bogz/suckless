@@ -78,11 +78,13 @@ static const char *voldwncmd[] = { "pactl", "set-sink-volume", "1", "-2%", NULL 
 static const char *padcmd[] = { "urxvtc", "-title", "scratchpad", "-geometry", "56x10-30+40", NULL };
 static const char *tmuxcmd[] = { "urxvtc", "-geometry", "80x25-790+40", "-title", "tmux", "-e", "tmux",  NULL };
 
+#include "mpdcontrol.c"
+
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_r,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
-        { ControlMask|Mod1Mask,         XK_r,      spawn,          {.v = rebootcmd } },
+    { ControlMask|Mod1Mask,         XK_r,      spawn,          {.v = rebootcmd } },
 	{ ControlMask|Mod1Mask,         XK_q,      spawn,          {.v = shutcmd } },
 	{ ControlMask|Mod1Mask,         XK_l,      spawn,          {.v = lockcmd } },
 	{ Mod1Mask,                     XK_Up,     spawn,          {.v = volupcmd} },
@@ -90,7 +92,10 @@ static Key keys[] = {
 	{ MODKEY,                       XK_q,      spawn,          {.v = webcmd} },
 	{ MODKEY,                       XK_e,      spawn,          {.v = thunarcmd} },
 	{ ControlMask|Mod1Mask,         XK_p,      spawn,          {.v = padcmd } },
-	{ ControlMask|Mod1Mask,		XK_t,	   spawn,	   {.v = tmuxcmd } },
+	{ ControlMask|Mod1Mask,		    XK_t,	   spawn,	   {.v = tmuxcmd } },
+	{ ControlMask|Mod1Mask,         XK_Left,   mpdchange,      {.i = -1} },
+	{ ControlMask|Mod1Mask,         XK_Right,  mpdchange,      {.i = +1} },
+	{ ControlMask|Mod1Mask,         XK_Up,     mpdcontrol,     {0} },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
