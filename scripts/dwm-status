@@ -1,9 +1,6 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 # Status script for dwm
-# colours: 01:normal 02:white 03:red 04:green 05:yellow 06:blue
-# 07:cyan 08:magenta 09:grey
 
-# Copyright (c) 2013-2016 Jason W Ryan
 # The MIT License (MIT) http://opensource.org/licenses/MIT
 
 
@@ -62,43 +59,13 @@ hdd(){
 }
 
 eml(){
-  maildirs="$HOME/.mail/*/INBOX/new/"
+  maildirs="imaps://imap.gmail.com:993"
   ml="$(find $maildirs -type f | wc -l)"
   if (( ml > 0 )); then
     printf "%b" "\x03$ml\x01"
   else
     printf "0"
   fi
-}
-
-pac(){
-  pup="$(pacman -Qqu --dbpath /tmp/aur/ | wc -l)"
-  if (( pup > 0 )); then
-    printf "%b" "\x05$pup\x01"
-  else
-    printf "0"
-  fi
-}
-
-ups(){
-  ups="$(wc -l < /tmp/aur*)"
-  if (( ups > 0 )); then
-    printf "%b" "\x05$ups\x01"
-  else
-    printf "0"
-  fi
-}
-
-aur(){
-   aur="$(awk '$0 !~ /^No /' /tmp/aurphans* | wc -l)"
-   if (( aur > 0 )); then
-     printf "%b" "\x03 ∆\x01"
-   fi
-}
-
-int(){
-  host google.com>/dev/null &&
-  printf "%b" "ON" || printf "%b" "NO"
 }
 
 dte(){
@@ -109,4 +76,4 @@ dte(){
 # Pipe to status bar
 #xsetroot -name "$(music) • CPU $(cpu) • MEM $(mem) • HDD $(hdd)\
 #• NET $(int) • $(dte) • VOL $(vol) "
-xsetroot -name "$(music) • HDD $(hdd) • $(dte) • VOL $(vol) "
+xsetroot -name "$(music) • hdd $(hdd) • $(dte) • vol $(vol) "
