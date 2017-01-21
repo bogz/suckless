@@ -46,16 +46,7 @@ cpu(){
 }
 
 hdd(){
-  hd=( $(awk '
-    {i=$5} /boot/ {a=i}; /root/ {b=i}; /home/ {c=i}; /media/ {d=i}
-    END {if (NR>=11) print a,b,c,d; else print a,b,c}
-           ' <(df -P)) )
-  drives="${#hd[@]}"
-  if (( drives > 3 )); then
-    printf "%b " "${hd[@]:0:3} ${hd[@]:3:1}"
-  else
-    printf "%b " "${hd[@]}"
-  fi
+  ~/src/scripts/hdd.py
 }
 
 eml(){
@@ -76,4 +67,4 @@ dte(){
 # Pipe to status bar
 #xsetroot -name "$(music) • CPU $(cpu) • MEM $(mem) • HDD $(hdd)\
 #• NET $(int) • $(dte) • VOL $(vol) "
-xsetroot -name "$(music) • hdd $(hdd) • $(dte) • vol $(vol) "
+xsetroot -name "$(music) • $(hdd) • $(dte) • vol $(vol) "
