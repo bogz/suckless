@@ -33,16 +33,8 @@ mem(){
   printf "%b" "$mem"
 }
 
-# CPU line courtesy Procyon:
-# https://bbs.archlinux.org/viewtopic.php?pid=874333#p874333
 cpu(){
-  read cpu a b c previdle rest < /proc/stat
-  prevtotal=$((a+b+c+previdle))
-  sleep 0.5
-  read cpu a b c idle rest < /proc/stat
-  total=$((a+b+c+idle))
-  cpu="$((100*( (total-prevtotal) - (idle-previdle) ) / (total-prevtotal) ))"
-  printf "%b" "$cpu"
+  ~/src/scripts/cpu.py
 }
 
 hdd(){
@@ -67,4 +59,4 @@ dte(){
 # Pipe to status bar
 #xsetroot -name "$(music) • CPU $(cpu) • MEM $(mem) • HDD $(hdd)\
 #• NET $(int) • $(dte) • VOL $(vol) "
-xsetroot -name "$(music) • $(hdd) • $(dte) • vol $(vol) "
+xsetroot -name "$(music) • cpu $(cpu)% • $(hdd) • $(dte) • vol $(vol) "
