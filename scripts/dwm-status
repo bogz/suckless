@@ -12,7 +12,7 @@ music(){
 }
 
 vol(){
-  vol="$(pactl list sinks | grep 'Volume' |awk 'FNR == 3 {print $5}')"
+  vol="$(pactl list sinks | grep 'Volume' |awk 'FNR == 1 {print $5}')"
   printf "%b" "$vol"
 }
 

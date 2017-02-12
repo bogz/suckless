@@ -73,10 +73,11 @@ static const char *webcmd[]  = { "firefox", NULL};
 static const char *thunarcmd[]  = { "thunar", NULL };
 static const char *rebootcmd[] = { "systemctl", "reboot", NULL };
 static const char *shutcmd[] = { "systemctl", "poweroff", NULL };
-static const char *volupcmd[] = { "pactl", "set-sink-volume", "1", "+2%", NULL };
-static const char *voldwncmd[] = { "pactl", "set-sink-volume", "1", "-2%", NULL };
+static const char *volupcmd[] = { "amixer", "-q", "set", "Master", "1%+", NULL };
+static const char *voldwncmd[] = { "amixer", "-q", "set", "master", "1%-",  NULL };
 static const char *padcmd[] = { "urxvtc", "-title", "scratchpad", "-geometry", "56x10-30+40", NULL };
 static const char *tmuxcmd[] = { "urxvtc", "-geometry", "80x25-790+40", "-title", "tmux", "-e", "tmux",  NULL };
+
 
 #include "mpdcontrol.c"
 
