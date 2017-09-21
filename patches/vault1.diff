@@ -1,6 +1,6 @@
-diff -ur dwm/config.def.h src/dwm/config.def.h
---- dwm/config.def.h	2015-11-09 00:39:37.000000000 +0200
-+++ src/dwm/config.def.h	2017-01-20 23:27:47.759404262 +0200
+diff -ur b/config.def.h a/config.def.h
+--- b/config.def.h	2017-09-21 14:23:48.529069600 +0300
++++ a/config.def.h	2017-09-21 14:23:19.535647200 +0300
 @@ -2,22 +2,26 @@
  
  /* appearance */
@@ -67,7 +67,7 @@ diff -ur dwm/config.def.h src/dwm/config.def.h
  #define TAGKEYS(KEY,TAG) \
  	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
  	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
-@@ -55,12 +67,35 @@
+@@ -55,12 +67,32 @@
  /* commands */
  static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
  static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
@@ -78,12 +78,12 @@ diff -ur dwm/config.def.h src/dwm/config.def.h
 +static const char *thunarcmd[]  = { "thunar", NULL };
 +static const char *rebootcmd[] = { "systemctl", "reboot", NULL };
 +static const char *shutcmd[] = { "systemctl", "poweroff", NULL };
-+static const char *volupcmd[] = { "pactl", "set-sink-volume", "1", "+2%", NULL };
-+static const char *voldwncmd[] = { "pactl", "set-sink-volume", "1", "-2%", NULL };
++static const char *volupcmd[] = { "amixer", "-q", "set", "Master", "1%+", NULL };
++static const char *voldwncmd[] = { "amixer", "-q", "set", "Master", "1%-",  NULL };
 +static const char *padcmd[] = { "urxvtc", "-title", "scratchpad", "-geometry", "56x10-30+40", NULL };
 +static const char *tmuxcmd[] = { "urxvtc", "-geometry", "80x25-790+40", "-title", "tmux", "-e", "tmux",  NULL };
 +
-+#include "mpdcontrol.c"
++
  
  static Key keys[] = {
  	/* modifier                     key        function        argument */
@@ -100,13 +100,10 @@ diff -ur dwm/config.def.h src/dwm/config.def.h
 +	{ MODKEY,                       XK_e,      spawn,          {.v = thunarcmd} },
 +	{ ControlMask|Mod1Mask,         XK_p,      spawn,          {.v = padcmd } },
 +	{ ControlMask|Mod1Mask,		    XK_t,	   spawn,	   {.v = tmuxcmd } },
-+	{ ControlMask|Mod1Mask,         XK_Left,   mpdchange,      {.i = -1} },
-+	{ ControlMask|Mod1Mask,         XK_Right,  mpdchange,      {.i = +1} },
-+	{ ControlMask|Mod1Mask,         XK_Up,     mpdcontrol,     {0} },
  	{ MODKEY,                       XK_b,      togglebar,      {0} },
  	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
  	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
-@@ -68,12 +103,14 @@
+@@ -68,12 +100,14 @@
  	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
  	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
  	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
@@ -122,7 +119,7 @@ diff -ur dwm/config.def.h src/dwm/config.def.h
  	{ MODKEY,                       XK_space,  setlayout,      {0} },
  	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
  	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
-@@ -82,15 +119,14 @@
+@@ -82,15 +116,14 @@
  	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
  	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
  	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
@@ -142,22 +139,21 @@ diff -ur dwm/config.def.h src/dwm/config.def.h
  	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
  };
  
-Only in src/dwm: config.h
-diff -ur dwm/config.mk src/dwm/config.mk
---- dwm/config.mk	2015-11-09 00:39:37.000000000 +0200
-+++ src/dwm/config.mk	2017-01-20 23:17:38.006052416 +0200
-@@ -22,7 +22,7 @@
+diff -ur b/config.mk a/config.mk
+--- b/config.mk	2017-09-21 14:23:48.531535700 +0300
++++ a/config.mk	2017-09-21 14:23:19.541535800 +0300
+@@ -18,7 +18,7 @@
+ FREETYPELIBS = -lfontconfig -lXft
+ FREETYPEINC = /usr/include/freetype2
+ # OpenBSD (uncomment)
+-FREETYPEINC = ${X11INC}/freetype2
++#FREETYPEINC = ${X11INC}/freetype2
  
  # includes and libs
  INCS = -I${X11INC} -I${FREETYPEINC}
--LIBS = -L${X11LIB} -lX11 ${XINERAMALIBS} ${FREETYPELIBS}
-+LIBS = -L${X11LIB} -lX11 ${XINERAMALIBS} ${FREETYPELIBS} -lmpdclient
- 
- # flags
- CPPFLAGS = -D_BSD_SOURCE -D_POSIX_C_SOURCE=2 -DVERSION=\"${VERSION}\" ${XINERAMAFLAGS}
-diff -ur dwm/dwm.c src/dwm/dwm.c
---- dwm/dwm.c	2015-11-09 00:39:37.000000000 +0200
-+++ src/dwm/dwm.c	2017-01-06 19:34:30.740990193 +0200
+diff -ur b/dwm.c a/dwm.c
+--- b/dwm.c	2017-09-21 14:23:48.545276400 +0300
++++ a/dwm.c	2017-09-21 14:23:19.553289200 +0300
 @@ -57,12 +57,30 @@
  #define TAGMASK                 ((1 << LENGTH(tags)) - 1)
  #define TEXTW(X)                (drw_text(drw, 0, 0, 0, 0, (X), 0) + drw->fonts[0]->h)
@@ -1045,19 +1041,5 @@ diff -ur dwm/dwm.c src/dwm/dwm.c
  main(int argc, char *argv[])
  {
  	if (argc == 2 && !strcmp("-v", argv[1]))
-Only in src/dwm: fibonacci.c
-diff -ur dwm/Makefile src/dwm/Makefile
---- dwm/Makefile	2015-11-09 00:39:37.000000000 +0200
-+++ src/dwm/Makefile	2017-01-20 23:14:39.529380330 +0200
-@@ -18,7 +18,7 @@
- 	@echo CC $<
- 	@${CC} -c ${CFLAGS} $<
- 
--${OBJ}: config.h config.mk
-+${OBJ}: config.h config.mk mpdcontrol.c
- 
- config.h:
- 	@echo creating $@ from config.def.h
-Only in src/dwm: mpdcontrol.c
-Only in src/dwm: .project
-Only in src/dwm: push.c
+Only in a: fibonacci.c
+Only in a: push.c

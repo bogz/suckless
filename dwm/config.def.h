@@ -79,7 +79,6 @@ static const char *padcmd[] = { "urxvtc", "-title", "scratchpad", "-geometry", "
 static const char *tmuxcmd[] = { "urxvtc", "-geometry", "80x25-790+40", "-title", "tmux", "-e", "tmux",  NULL };
 
 
-#include "mpdcontrol.c"
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -94,9 +93,6 @@ static Key keys[] = {
 	{ MODKEY,                       XK_e,      spawn,          {.v = thunarcmd} },
 	{ ControlMask|Mod1Mask,         XK_p,      spawn,          {.v = padcmd } },
 	{ ControlMask|Mod1Mask,		    XK_t,	   spawn,	   {.v = tmuxcmd } },
-	{ ControlMask|Mod1Mask,         XK_Left,   mpdchange,      {.i = -1} },
-	{ ControlMask|Mod1Mask,         XK_Right,  mpdchange,      {.i = +1} },
-	{ ControlMask|Mod1Mask,         XK_Up,     mpdcontrol,     {0} },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
