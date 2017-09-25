@@ -65,7 +65,7 @@ conky &
 #exec $1
 
 # Start dwm with xinitrc
-exec /opt/dwmstart
+exec $HOME/dwm/dwmstart
 
 # Start awesome with xinitrc
 #exec awesome > ~/awesome_startup.log 2>&1
