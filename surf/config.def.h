@@ -56,6 +56,11 @@ static UriParameters uriparams[] = {
 	}, },
 };
 
+static SearchEngine searchengines[] = {
+    { "g",   "http://www.google.de/search?q=%s"   },
+    { "leo", "http://dict.leo.org/ende?search=%s" },
+};
+
 /* default window size: width, height */
 static int winsize[] = { 800, 600 };
 
