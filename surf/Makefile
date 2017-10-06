@@ -22,6 +22,8 @@ options:
 $(OBJ): config.h config.mk
 
 config.h:
+	@echo removing $@ from folder
+	@rm -rf $@
 	@echo creating $@ from config.def.h
 	@cp config.def.h $@
 
