@@ -1,6 +1,4 @@
-# DWM configs
+# Suckless builds and patches
 
-Fully patched dwm I use, you can just clone and run:
-
-$ make install clean
+Various builds and patches for *suckless
 
