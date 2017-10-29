@@ -42,6 +42,7 @@ static const Rule rules[] = {
 static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
+static const unsigned int gappx = 6; /* gap pixel between windows */ 
 
 #include "fibonacci.c"
 static const Layout layouts[] = {
@@ -79,7 +80,6 @@ static const char *volupcmd[] = { "amixer", "-q", "set", "Master", "1%+", NULL }
 static const char *voldwncmd[] = { "amixer", "-q", "set", "Master", "1%-",  NULL };
 static const char *padcmd[] = { "urxvtc", "-title", "scratchpad", "-geometry", "56x10-30+40", NULL };
 static const char *tmuxcmd[] = { "urxvtc", "-geometry", "80x25-790+40", "-title", "tmux", "-e", "tmux",  NULL };
-
 
 
 static Key keys[] = {
