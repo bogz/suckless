@@ -1,3 +1,5 @@
+#! /usr/bin/python3
+
 from urllib.request import urlopen
 import json
 import sys
@@ -17,6 +19,6 @@ current = parsed_json['current_observation']
 
 # Print current data
 temp = current['temp_c']
-flike = current['feelslike_c']
+#flike = current['feelslike_c']
 cond = current['weather']
-print('{}({}) | {}'.format(temp, flike, cond))
+print('{}°C | {}'.format(temp, cond))
