@@ -11,7 +11,7 @@ static const char normfgcolor[]     = "#bbbbbb";
 static const char selbordercolor[]  = "#67b1ae";
 static const char selbgcolor[]      = "#555555";
 static const char selfgcolor[]      = "#eeeeee";
-static const unsigned int borderpx  = 1;        /* border pixel of windows */
+static const unsigned int borderpx  = 0;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayspacing = 2;   /* systray spacing */
@@ -42,7 +42,7 @@ static const Rule rules[] = {
 static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
-static const unsigned int gappx = 6; /* gap pixel between windows */ 
+static const unsigned int gappx = 5; /* gap pixel between windows */ 
 
 #include "fibonacci.c"
 static const Layout layouts[] = {
@@ -80,7 +80,7 @@ static const char *volupcmd[] = { "amixer", "-q", "set", "Master", "1%+", NULL }
 static const char *voldwncmd[] = { "amixer", "-q", "set", "Master", "1%-",  NULL };
 static const char *padcmd[] = { "urxvtc", "-title", "scratchpad", "-geometry", "56x10-30+40", NULL };
 static const char *tmuxcmd[] = { "urxvtc", "-geometry", "80x25-790+40", "-title", "tmux", "-e", "tmux",  NULL };
-
+static const char *weathercmd[] = { "~/src/scripts/weather.sh", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -95,6 +95,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_e,      spawn,          {.v = thunarcmd} },
 	{ ControlMask|Mod1Mask,         XK_p,      spawn,          {.v = padcmd } },
 	{ ControlMask|Mod1Mask,		    XK_t,	   spawn,	       {.v = tmuxcmd } },
+    { MODKEY,                       XK_w,      spawn,          {.v = weathercmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
