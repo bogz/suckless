@@ -3,7 +3,7 @@
 
 while true; do
 		$HOME/src/scripts/dwm-status
-    	sleep 1.5
+    	sleep 1
 done &
 
 while true; do

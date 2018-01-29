@@ -56,9 +56,6 @@ dte(){
   printf "%b" "$dte"
 }
 
-#weather(){
-#  ~/src/scripts/weather.py
-#}
 # Pipe to status bar
 #xsetroot -name "$(music) • CPU $(cpu) • MEM $(mem) • HDD $(hdd)\
 #• NET $(int) • $(dte) • VOL $(vol) "
