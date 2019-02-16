@@ -18,13 +18,14 @@ vol(){
 
 bat(){
   onl="$(</sys/class/power_supply/AC/online)"
-  charge="$(</sys/class/power_supply/BAT0/capacity)"
-  if [[ $onl -eq 0 && $charge -ge 15 ]]; then
-    printf "%b" "BAT \x04$charge%\x01"
-  elif [[ $onl -eq 0 && $charge -le 14 ]]; then
-    printf "%b" "BAT $charge%"
+  charge0="$(</sys/class/power_supply/BAT0/capacity)"
+  charge1="$(</sys/class/power_supply/BAT1/capacity)"
+  if [[ $onl -eq 0 && $charge0 -ge 15 ]] || [[ $onl -eq 0 && $charge1 -ge 15 ]]; then
+    printf "BAT $charge0 $charge1 "
+  elif [[ $onl -eq 0 && $charge0 -le 14 ]] || [[ $onl -eq 0 && $charge1 -le 14 ]]; then
+    printf "BAT $charge0 $charge1 "
   else
-    printf "%b" "AC $charge%"
+    printf "AC $charge0 $charge1 "
   fi
 }
 
@@ -56,7 +57,12 @@ dte(){
   printf "%b" "$dte"
 }
 
+kb(){
+  keys="$(xkblayout-state print "%s")"
+  printf "%b" "$keys"
+}
+
 # Pipe to status bar
 #xsetroot -name "$(music) • CPU $(cpu) • MEM $(mem) • HDD $(hdd)\
 #• NET $(int) • $(dte) • VOL $(vol) "
-xsetroot -name "$(music) • cpu $(cpu)% • $(hdd) • $(dte) • vol $(vol) "
+xsetroot -name "$(music) • cpu $(cpu)% • $(bat)• $(hdd) • $(dte) • vol $(vol) • $(kb)"

@@ -4,7 +4,7 @@
 static const char *fonts[] = {
 	"Dejavu Sans Mono:medium:size=10"
 };
-static const char dmenufont[]       = "monospace:size=10";
+static const char dmenufont[]       = "iosevka:size=10";
 static const char normbordercolor[] = "#444444";
 static const char normbgcolor[]     = "#3C3F41";
 static const char normfgcolor[]     = "#bbbbbb";
@@ -33,9 +33,9 @@ static const Rule rules[] = {
 	{ "Firefox",  NULL,       NULL,       1 << 1,       0,           -1 },
 	{ "pycharm",  NULL,       NULL,       1 << 3,       0,           -1 },
 	{ "Skype",    NULL,       NULL,       1 << 2,       1,           -1 },
-	{ "Stremio",  NULL,       NULL,       1 << 2,       1,           -1 },
+	{ "Sublime",  NULL,       NULL,       1 << 3,       1,           -1 },
 	{  NULL,      NULL,      "scratchpad",     0,       1,           -1 },
-	{  NULL,      NULL,	 "tmux",	0,	    1,		 -1 },
+	{  NULL,      NULL,	 	 "tmux",	  0,	    	1,		 	 -1 },
 };
 
 /* layout(s) */
@@ -79,8 +79,7 @@ static const char *shutcmd[] = { "systemctl", "poweroff", NULL };
 static const char *volupcmd[] = { "amixer", "-q", "set", "Master", "1%+", NULL };
 static const char *voldwncmd[] = { "amixer", "-q", "set", "Master", "1%-",  NULL };
 static const char *padcmd[] = { "urxvtc", "-title", "scratchpad", "-geometry", "56x10-30+40", NULL };
-static const char *tmuxcmd[] = { "urxvtc", "-geometry", "80x25-790+40", "-title", "tmux", "-e", "tmux",  NULL };
-static const char *weathercmd[] = { "~/src/scripts/weather.sh", NULL };
+static const char *tmuxcmd[] = { "urxvtc", "-geometry", "80x25-790+40", "-title", "tmux", "-e", "tmux", "new", "-A", "-s", "local", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -95,7 +94,6 @@ static Key keys[] = {
 	{ MODKEY,                       XK_e,      spawn,          {.v = thunarcmd} },
 	{ ControlMask|Mod1Mask,         XK_p,      spawn,          {.v = padcmd } },
 	{ ControlMask|Mod1Mask,		    XK_t,	   spawn,	       {.v = tmuxcmd } },
-    { MODKEY,                       XK_w,      spawn,          {.v = weathercmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
