@@ -34,15 +34,15 @@ static const Rule rules[] = {
 	{ "pycharm",  NULL,       NULL,       1 << 3,       0,           -1 },
 	{ "Skype",    NULL,       NULL,       1 << 2,       1,           -1 },
 	{ "Sublime",  NULL,       NULL,       1 << 3,       1,           -1 },
-	{  NULL,      NULL,      "scratchpad",     0,       1,           -1 },
-	{  NULL,      NULL,	 	 "tmux",	  0,	    	1,		 	 -1 },
+	{  NULL,      NULL,       "scratchpad",     0,      1,           -1 },
+	{  NULL,      NULL,	 	 		"tmux",	  	0,	    			1,		 	 		 -1 },
 };
 
 /* layout(s) */
 static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
-static const unsigned int gappx = 5; /* gap pixel between windows */ 
+static const unsigned int gappx = 3; /* gap pixel between windows */
 
 #include "fibonacci.c"
 static const Layout layouts[] = {
@@ -79,7 +79,7 @@ static const char *shutcmd[] = { "systemctl", "poweroff", NULL };
 static const char *volupcmd[] = { "amixer", "-q", "set", "Master", "1%+", NULL };
 static const char *voldwncmd[] = { "amixer", "-q", "set", "Master", "1%-",  NULL };
 static const char *padcmd[] = { "urxvtc", "-title", "scratchpad", "-geometry", "56x10-30+40", NULL };
-static const char *tmuxcmd[] = { "urxvtc", "-geometry", "80x25-790+40", "-title", "tmux", "-e", "tmux", "new", "-A", "-s", "local", NULL };
+static const char *tmuxcmd[] = { "urxvtc", "-geometry", "123x42-790+40", "-title", "tmux", "-e", "tmux", "new", "-A", "-s", "local", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -146,4 +146,3 @@ static Button buttons[] = {
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
 };
-
