@@ -21,40 +21,45 @@ bat(){
   charge0="$(</sys/class/power_supply/BAT0/capacity)"
   charge1="$(</sys/class/power_supply/BAT1/capacity)"
   if [[ $onl -eq 0 && $charge0 -ge 15 ]] || [[ $onl -eq 0 && $charge1 -ge 15 ]]; then
-    printf "BAT $charge0 $charge1 "
+    printf "bat $charge0 $charge1 "
   elif [[ $onl -eq 0 && $charge0 -le 14 ]] || [[ $onl -eq 0 && $charge1 -le 14 ]]; then
-    printf "BAT $charge0 $charge1 "
+    printf "bat $charge0 $charge1 "
   else
-    printf "AC $charge0 $charge1 "
+    printf "ac $charge0 $charge1 "
   fi
 }
 
 mem(){
   mem="$(awk '/^Mem/ {print $3}' <(free -m))"
-  printf "%b" "$mem"
+  printf "$mem"
 }
 
 cpu(){
-  ~/src/scripts/cpu.py
+  read cpu a b c previdle rest < /proc/stat
+  prevtotal=$((a+b+c+previdle))
+  sleep 0.5
+  read cpu a b c idle rest < /proc/stat
+  total=$((a+b+c+idle))
+  cpu="$((100*( (total-prevtotal) - (idle-previdle) ) / (total-prevtotal) ))"
+  printf "$cpu"
 }
 
 hdd(){
-  ~/src/scripts/hdd.py
-}
-
-eml(){
-  maildirs="imaps://imap.gmail.com:993"
-  ml="$(find $maildirs -type f | wc -l)"
-  if (( ml > 0 )); then
-    printf "%b" "\x03$ml\x01"
-  else
-    printf "0"
-  fi
+    hd=( $(awk '
+        {i=$5} /root/ {b=i}; /home/ {c=i}; /media/&&!/sr0/ {d=i}
+            END {print (NR>=11) ? a" "b" "c" "d : a" "b" "c}
+        ' <(df -P)) )
+    drives="${#hd[@]}"
+    if (( drives > 3 )); then
+        printf "%b " "${hd[@]:0:3} ${hd[@]:3:1}"
+    else
+        printf "%b " "${hd[@]}"
+    fi
 }
 
 dte(){
-  dte="$(date "+%T_%m-%d")"
-  printf "%b" "$dte"
+    dte="$(date "+%I:%M")"
+    printf "%b" "$dte"
 }
 
 kb(){
@@ -62,7 +67,15 @@ kb(){
   printf "%b" "$keys"
 }
 
+temp(){
+    tmp="$(awk '/^Package/ {print +$4}' <(sensors))"
+    mb="${tmp#* }"
+    if (( mb < 70 )); then
+        printf "%b" "mb $mb°"
+    else
+        printf "%b" "mb $mb°"
+    fi
+}
+
 # Pipe to status bar
-#xsetroot -name "$(music) • CPU $(cpu) • MEM $(mem) • HDD $(hdd)\
-#• NET $(int) • $(dte) • VOL $(vol) "
-xsetroot -name "$(music) • cpu $(cpu)% • $(bat)• $(hdd) • $(dte) • vol $(vol) • $(kb)"
+xsetroot -name "$(music) $(temp) • cpu $(cpu)% • mem $(mem) • $(bat)• hdd $(hdd)• $(dte) • vol $(vol) • $(kb) "

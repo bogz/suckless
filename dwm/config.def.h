@@ -2,7 +2,7 @@
 
 /* appearance */
 static const char *fonts[] = {
-	"Dejavu Sans Mono:medium:size=10"
+	"Source Code Pro:medium:size=10"
 };
 static const char dmenufont[]       = "iosevka:size=10";
 static const char normbordercolor[] = "#444444";
@@ -33,7 +33,7 @@ static const Rule rules[] = {
 	{ "Firefox",  NULL,       NULL,       1 << 1,       0,           -1 },
 	{ "pycharm",  NULL,       NULL,       1 << 3,       0,           -1 },
 	{ "Skype",    NULL,       NULL,       1 << 2,       1,           -1 },
-	{ "Sublime",  NULL,       NULL,       1 << 3,       1,           -1 },
+	{ "Atom",     NULL,       NULL,       1 << 3,       1,           -1 },
 	{  NULL,      NULL,       "scratchpad",     0,      1,           -1 },
 	{  NULL,      NULL,	 	 		"tmux",	  	0,	    			1,		 	 		 -1 },
 };
