@@ -21,7 +21,7 @@ static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 
 /* tagging */
-static const char *tags[] = { "base", "web", "media", "code" };
+static const char *tags[] = { "base", "net", "media", "code" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -29,11 +29,11 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
+	{ "Gimp",     NULL,       NULL,       0,            0,           -1 },
 	{ "Firefox",  NULL,       NULL,       1 << 1,       0,           -1 },
 	{ "pycharm",  NULL,       NULL,       1 << 3,       0,           -1 },
 	{ "Skype",    NULL,       NULL,       1 << 2,       1,           -1 },
-	{ "Atom",     NULL,       NULL,       1 << 3,       1,           -1 },
+	{ "Atom",     NULL,       NULL,       1 << 3,       0,           -1 },
 	{  NULL,      NULL,       "scratchpad",     0,      1,           -1 },
 	{  NULL,      NULL,	 	 		"tmux",	  	0,	    			1,		 	 		 -1 },
 };
@@ -76,10 +76,15 @@ static const char *webcmd[]  = { "firefox", NULL};
 static const char *thunarcmd[]  = { "thunar", NULL };
 static const char *rebootcmd[] = { "systemctl", "reboot", NULL };
 static const char *shutcmd[] = { "systemctl", "poweroff", NULL };
+static const char *suspcmd[] = { "systemctl", "suspend", NULL };
 static const char *volupcmd[] = { "amixer", "-q", "set", "Master", "1%+", NULL };
 static const char *voldwncmd[] = { "amixer", "-q", "set", "Master", "1%-",  NULL };
+static const char *mpctoggle[] = { "mpc", "toggle", NULL };
+static const char *mpcprev[] = { "mpc", "prev", NULL };
+static const char *mpcnext[] = { "mpc", "next", NULL };
+static const char *mpcstop[] = { "mpc", "stop", NULL };
 static const char *padcmd[] = { "urxvtc", "-title", "scratchpad", "-geometry", "56x10-30+40", NULL };
-static const char *tmuxcmd[] = { "urxvtc", "-geometry", "123x42-790+40", "-title", "tmux", "-e", "tmux", "new", "-A", "-s", "local", NULL };
+static const char *tmuxcmd[] = { "urxvtc", "-geometry", "123x42-790+40","-title", "tmux", "-e", "tmux", "new", "-A", "-s", "local", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -88,12 +93,17 @@ static Key keys[] = {
     { ControlMask|Mod1Mask,         XK_r,      spawn,          {.v = rebootcmd } },
 	{ ControlMask|Mod1Mask,         XK_q,      spawn,          {.v = shutcmd } },
 	{ ControlMask|Mod1Mask,         XK_l,      spawn,          {.v = lockcmd } },
+    { ControlMask|Mod1Mask,         XK_s,      spawn,          {.v = suspcmd } },
+	{ ControlMask|Mod1Mask,			XK_Up,	   spawn,		   {.v = mpctoggle} },
+	{ ControlMask|Mod1Mask,			XK_Down,   spawn,		   {.v = mpcstop} },
+	{ ControlMask|Mod1Mask,			XK_Right,  spawn,		   {.v = mpcnext} },
+	{ ControlMask|Mod1Mask,			XK_Left,   spawn,		   {.v = mpcprev} },
 	{ Mod1Mask,                     XK_Up,     spawn,          {.v = volupcmd} },
 	{ Mod1Mask,                     XK_Down,   spawn,          {.v = voldwncmd} },
 	{ MODKEY,                       XK_q,      spawn,          {.v = webcmd} },
 	{ MODKEY,                       XK_e,      spawn,          {.v = thunarcmd} },
 	{ ControlMask|Mod1Mask,         XK_p,      spawn,          {.v = padcmd } },
-	{ ControlMask|Mod1Mask,		    XK_t,	   spawn,	       {.v = tmuxcmd } },
+	{ ControlMask|Mod1Mask,		    XK_u,	   spawn,	       {.v = tmuxcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
