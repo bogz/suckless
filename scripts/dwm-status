@@ -58,7 +58,7 @@ hdd(){
 }
 
 dte(){
-    dte="$(date "+%I:%M")"
+    dte="$(date "+%H:%M")"
     printf "%b" "$dte"
 }
 
@@ -78,4 +78,4 @@ temp(){
 }
 
 # Pipe to status bar
-xsetroot -name "$(music) $(temp) • cpu $(cpu)% • mem $(mem) • $(bat)• hdd $(hdd)• $(dte) • vol $(vol) • $(kb) "
+xsetroot -name "$(music) • $(temp) • cpu $(cpu)% • mem $(mem) • $(bat)• hdd $(hdd)• $(dte) • vol $(vol) • $(kb) "

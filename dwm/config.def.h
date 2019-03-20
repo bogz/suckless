@@ -1,8 +1,7 @@
 /* See LICENSE file for copyright and license details. */
-
 /* appearance */
 static const char *fonts[] = {
-	"Source Code Pro:medium:size=10"
+    "Source Code Pro:medium:size=10"
 };
 static const char dmenufont[]       = "iosevka:size=10";
 static const char normbordercolor[] = "#444444";
@@ -21,7 +20,7 @@ static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 
 /* tagging */
-static const char *tags[] = { "base", "net", "media", "code" };
+static const char *tags[] = { "media", "net", "term", "code" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -32,7 +31,10 @@ static const Rule rules[] = {
 	{ "Gimp",     NULL,       NULL,       0,            0,           -1 },
 	{ "Firefox",  NULL,       NULL,       1 << 1,       0,           -1 },
 	{ "pycharm",  NULL,       NULL,       1 << 3,       0,           -1 },
-	{ "Skype",    NULL,       NULL,       1 << 2,       1,           -1 },
+    { "clion",    NULL,       NULL,       1 << 3,       0,           -1 },
+    { "Skype",    NULL,       NULL,       1 << 0,       1,           -1 },
+    { "Visual",   NULL,       NULL,       1 << 3,       0,           -1 },
+    { "mplayer",  NULL,       NULL,       1 << 0,       0,           -1 },
 	{ "Atom",     NULL,       NULL,       1 << 3,       0,           -1 },
 	{  NULL,      NULL,       "scratchpad",     0,      1,           -1 },
 	{  NULL,      NULL,	 	 		"tmux",	  	0,	    			1,		 	 		 -1 },
@@ -42,7 +44,7 @@ static const Rule rules[] = {
 static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
-static const unsigned int gappx = 3; /* gap pixel between windows */
+static const unsigned int gappx = 2; /* gap pixel between windows */
 
 #include "fibonacci.c"
 static const Layout layouts[] = {
