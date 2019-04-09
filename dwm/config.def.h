@@ -20,7 +20,7 @@ static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 
 /* tagging */
-static const char *tags[] = { "media", "net", "term", "code" };
+static const char *tags[] = { "base", "net", "term", "code" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -31,7 +31,7 @@ static const Rule rules[] = {
 	{ "Gimp",     NULL,       NULL,       0,            0,           -1 },
 	{ "Firefox",  NULL,       NULL,       1 << 1,       0,           -1 },
 	{ "pycharm",  NULL,       NULL,       1 << 3,       0,           -1 },
-    { "clion",    NULL,       NULL,       1 << 3,       0,           -1 },
+    { "clion",    NULL,       NULL,       1 << 3,       1,           -1 },
     { "Skype",    NULL,       NULL,       1 << 0,       1,           -1 },
     { "Visual",   NULL,       NULL,       1 << 3,       0,           -1 },
     { "mplayer",  NULL,       NULL,       1 << 0,       0,           -1 },
@@ -53,7 +53,7 @@ static const Layout layouts[] = {
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
  	{ "[@]",      spiral },
- 	{ "[\\]",      dwindle },
+ 	{ "[\\]",     dwindle },
  	{ "TTT",      bstack },
 	{ "===",      bstackhoriz },
 };
