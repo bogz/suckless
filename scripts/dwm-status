@@ -3,6 +3,7 @@
 
 # The MIT License (MIT) http://opensource.org/licenses/MIT
 
+sp="$(echo -ne " ")"
 
 music(){
   track="$(mpc current)"
