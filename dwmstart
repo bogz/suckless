@@ -2,8 +2,8 @@
 # Script to start dwm in loop
 
 while true; do
-		$HOME/src/scripts/dwm-status
-    	sleep 1
+		$HOME/suckless/scripts/dwm-status
+    	sleep 3
 done &
 
 while true; do
