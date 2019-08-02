@@ -10,20 +10,24 @@ static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display 
 static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = {"Cascadia Code:size=7"};
-static const char dmenufont[]       = "Cascadia Code:size=7";
-static const char col_vdark[]       = "#000000";
-static const char col_dark[]        = "#1e1f23";
-static const char col_mid[]         = "#464852";
-static const char col_norm[]        = "#737786";
-static const char col_full[]        = "#dcdccc";
+static const char *fonts[]          = { "Source Code Pro:size=7" };
+static const char dmenufont[]       = "Source Code Pro:size=7";
+static const char col_gray1[]       = "#222222";
+static const char col_gray2[]       = "#444444";
+static const char col_gray3[]       = "#bbbbbb";
+static const char col_gray4[]       = "#eeeeee";
+static const char col_cyan[]        = "#005577";
+/* Zenburn colors */
+static const char col_green1[]      = "#709080";
+static const char col_purple[]      = "#cc9393";
+static const char col_yellow[]      = "#dcdccc";
+static const char col_gray5[]       = "#3f3f3f";
+/* End of Zenburn */
 static const char *colors[][3]      = {
-	/*               fg         bg          border   */
-	[SchemeNorm] = { col_mid,   col_vdark,  col_mid  },
-	[SchemeSel]  = { col_full,  col_vdark,  col_full },
+        /*               fg         bg         border   */
+        [SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
+        [SchemeSel]  = { col_yellow, col_gray5,  col_green1  },
 };
-
-
 /* tagging */
 static const char *tags[] = { "base", "net", "term", "code" };
 
@@ -34,12 +38,12 @@ static const Rule rules[] = {
          */
         /* class      instance    title       tags mask     isfloating   monitor */
         { "Gimp",     NULL,       NULL,       0,            0,           -1 },
-	{ "st",       NULL,       NULL,       1 << 2,       0,           -1 },
-	{ "firefox",  NULL,       NULL,       1 << 1,       0,           -1 },
+        { "Firefox",  NULL,       NULL,       1 << 1,       0,           -1 },
+        { "surf",     NULL,       NULL,       1 << 1,       0,           -1 },
         { "pycharm",  NULL,       NULL,       1 << 3,       0,           -1 },
-        { "subl4",    NULL,       NULL,       1 << 3,       0,           -1 },
+        { "clion",    NULL,       NULL,       1 << 3,       0,           -1 },
         { "Skype",    NULL,       NULL,       1 << 0,       1,           -1 },
-        { "intellij", NULL,       NULL,       1 << 3,       0,           -1 },
+        { "Visual",   NULL,       NULL,       1 << 3,       0,           -1 },
         { "mplayer",  NULL,       NULL,       1 << 0,       0,           -1 },
         { "Atom",     NULL,       NULL,       1 << 3,       0,           -1 },
         { NULL,       NULL,      "scratchpad",     0,       1,           -1 },
@@ -73,10 +77,10 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_vdark, "-nf", col_norm, "-sb", col_dark, "-sf", col_full, NULL };
-static const char *termcmd[]  = { "st", NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+static const char *termcmd[]  = { "urxvtc", NULL };
 static const char *lockcmd[]  = { "slock", NULL };
-static const char *webcmd[]  = { "firefox-nightly", NULL};
+static const char *webcmd[]  = { "firefox", NULL};
 static const char *thunarcmd[]  = { "thunar", NULL };
 static const char *rebootcmd[] = { "systemctl", "reboot", NULL };
 static const char *shutcmd[] = { "systemctl", "poweroff", NULL };
@@ -87,9 +91,8 @@ static const char *mpctoggle[] = { "mpc", "toggle", NULL };
 static const char *mpcprev[] = { "mpc", "prev", NULL };
 static const char *mpcnext[] = { "mpc", "next", NULL };
 static const char *mpcstop[] = { "mpc", "stop", NULL };
-static const char *padcmd[] = { "st", "-t", "scratchpad", "-g", "66x10-30+40", NULL };
-static const char *tmuxcmd[] = { "st", "-g", "123x42-790+40", "-t", "tmux", "tmux",  "new", "-A", "-s", "local", NULL};
-static const char *turfcmd[] = { "tabbed", "-c", "surf", "-e", NULL };
+static const char *padcmd[] = { "urxvtc", "-title", "scratchpad", "-geometry", "56x10-30+40", NULL };
+static const char *tmuxcmd[] = { "urxvtc", "-geometry", "123x42-790+40","-title", "tmux", "-e", "tmux", "new", "-A", "-s", "local", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -99,15 +102,14 @@ static Key keys[] = {
 	{ ControlMask|Mod1Mask,         XK_q,      spawn,          {.v = shutcmd } },
 	{ ControlMask|Mod1Mask,         XK_l,      spawn,          {.v = lockcmd } },
 	{ ControlMask|Mod1Mask,         XK_s,      spawn,          {.v = suspcmd } },
-	{ ControlMask|Mod1Mask,		XK_Up,	   spawn,	   {.v = mpctoggle } },
-	{ ControlMask|Mod1Mask,		XK_Down,   spawn,	   {.v = mpcstop } },
-	{ ControlMask|Mod1Mask,		XK_Right,  spawn,	   {.v = mpcnext } },
-	{ ControlMask|Mod1Mask,		XK_Left,   spawn,	   {.v = mpcprev } },
-	{ Mod1Mask,                     XK_Up,     spawn,          {.v = volupcmd } },
-	{ Mod1Mask,                     XK_Down,   spawn,          {.v = voldwncmd } },
-	{ MODKEY,                       XK_q,      spawn,          {.v = webcmd } },
-	{ MODKEY,			XK_w,	   spawn,	   {.v = turfcmd } },
-	{ MODKEY,                       XK_e,      spawn,          {.v = thunarcmd } },
+	{ ControlMask|Mod1Mask,		XK_Up,	   spawn,	   {.v = mpctoggle} },
+	{ ControlMask|Mod1Mask,		XK_Down,   spawn,	   {.v = mpcstop} },
+	{ ControlMask|Mod1Mask,		XK_Right,  spawn,	   {.v = mpcnext} },
+	{ ControlMask|Mod1Mask,		XK_Left,   spawn,	   {.v = mpcprev} },
+	{ Mod1Mask,                     XK_Up,     spawn,          {.v = volupcmd} },
+	{ Mod1Mask,                     XK_Down,   spawn,          {.v = voldwncmd} },
+	{ MODKEY,                       XK_q,      spawn,          {.v = webcmd} },
+	{ MODKEY,                       XK_e,      spawn,          {.v = thunarcmd} },
 	{ ControlMask|Mod1Mask,         XK_p,      spawn,          {.v = padcmd } },
 	{ ControlMask|Mod1Mask,		XK_u,	   spawn,	   {.v = tmuxcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
