@@ -73,11 +73,11 @@ temp(){
 	tmp="$(awk '/^Package/ {print +$4}' <(sensors))"
 	mb="${tmp#* }"
 	if (( mb < 70 )); then
-		printf "%b" "mb $mb°"
+		printf "%b" "temp $mb°"
 	else
-		printf "%b" "!mb! $mb°"
+		printf "%b" "!temp! $mb°"
 	fi
 }
 
 # Pipe to status bar
-xsetroot -name "$(music) • $(bat) • $(temp) • $(cpu) • $(mem) • $(hdd)• $(vol) • $(kb) • $(dte) "
+xsetroot -name "$(music) • $(bat) • $(temp) • $(cpu) • $(mem) • $(vol) • $(kb) • $(dte) "
