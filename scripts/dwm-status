@@ -1,7 +1,10 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 # Status script for dwm
 
 # The MIT License (MIT) http://opensource.org/licenses/MIT
+
+# colours: 01:normal 02:white 03:red 04:green 05:yellow 06:blue
+# 07:cyan 08:magenta 09:grey
 
 sp="$(echo -ne " ")"
 
@@ -47,14 +50,14 @@ cpu(){
 
 hdd(){
     hd=( $(awk '
-        {i=$5} /root/ {b=i}; /home/ {c=i}; /media/&&!/sr0/ {d=i}
+        {i=$5} /boot/ {a=i}; /root/ {b=i}; /home/ {c=i}; /media/&&!/sr0/ {d=i}
             END {print (NR>=11) ? a" "b" "c" "d : a" "b" "c}
         ' <(df -P)) )
     drives="${#hd[@]}"
     if (( drives > 3 )); then
-        printf "%b " "hdd ${hd[@]:0:3} ${hd[@]:3:1}"
+        printf "%b " "${hd[@]:0:3} ${hd[@]:3:1}"
     else
-        printf "%b " "hdd ${hd[@]}"
+        printf "%b " "${hd[@]}"
     fi
 }
 
