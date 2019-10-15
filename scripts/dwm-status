@@ -67,7 +67,6 @@ dte(){
 }
 
 kb(){
-	#pkill xkblayout-state
 	keys="$(xkblayout-state print "%s")"
 	printf "%b" "$keys"
 }
