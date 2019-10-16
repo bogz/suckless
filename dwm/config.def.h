@@ -40,9 +40,9 @@ static const Rule rules[] = {
          */
         /* class      instance    title       tags mask     isfloating   monitor */
         { "Gimp",     NULL,       NULL,       0,            0,           -1 },
-        { "Firefox",  NULL,       NULL,       1 << 1,       0,           -1 },
         { "surf",     NULL,       NULL,       1 << 1,       0,           -1 },
 	{ "st",       NULL,       NULL,       1 << 2,       0,           -1 },
+	{ "firefox",  NULL,       NULL,       1 << 1,       0,           -1 },
         { "pycharm",  NULL,       NULL,       1 << 3,       0,           -1 },
         { "clion",    NULL,       NULL,       1 << 3,       0,           -1 },
         { "Skype",    NULL,       NULL,       1 << 0,       1,           -1 },
@@ -95,7 +95,8 @@ static const char *mpcprev[] = { "mpc", "prev", NULL };
 static const char *mpcnext[] = { "mpc", "next", NULL };
 static const char *mpcstop[] = { "mpc", "stop", NULL };
 static const char *padcmd[] = { "st", "-t", "scratchpad", "-g", "66x10-30+40", NULL };
-static const char *tmuxcmd[] = { "st", "-g", "123x42-790+40", "-t", "tmux", "tmux",  "new", "-A", "-s", "local", NULL};
+static const char *tmuxcmd[] = { "st", "-g", "123x42-790+40", "-t", "tmux",
+															 "tmux",  "new", "-A", "-s", "local", NULL};
 static const char *turfcmd[] = { "tabbed", "-c", "surf", "-e", NULL };
 
 static Key keys[] = {
@@ -166,4 +167,3 @@ static Button buttons[] = {
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
 };
-
