@@ -11,7 +11,9 @@ static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = { "Source Code Pro:size=7",
-					"FontAwesome 10"};
+					"Font Awesome 5 Free Regular-8",
+					"Font Awesome 5 Free Solid-8"
+};
 static const char dmenufont[]       = "Cascadia Code:size=7";
 static const char col_black[]	    = "#282828";
 static const char col_red[]	    = "#cc241d";
