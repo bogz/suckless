@@ -17,7 +17,7 @@ music(){
 
 vol(){
 	vol="$(pactl list sinks | grep 'Volume' |awk 'FNR == 1 {print $5}')"
-	printf "%b" " $vol "
+	printf "%b" " $vol"
 }
 
 bat(){
@@ -82,4 +82,4 @@ temp(){
 }
 
 # Pipe to status bar
-xsetroot -name "$(music)  $(bat)  $(temp)  $(cpu)  $(mem)  $(vol)  $(kb)  $(dte) "
+xsetroot -name "$(music)  $(bat)  $(temp)  $(cpu)%  $(mem)  $(vol)  $(kb)  $(dte) "
