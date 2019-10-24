@@ -3,11 +3,6 @@
 
 # The MIT License (MIT) http://opensource.org/licenses/MIT
 
-# colours: 01:normal 02:white 03:red 04:green 05:yellow 06:blue
-# 07:cyan 08:magenta 09:grey
-
-sp="$(echo -ne " ")"
-
 music(){
   track="$(mpc current)"
   artist="${track%%- *}"
@@ -16,8 +11,16 @@ music(){
 }
 
 vol(){
-	vol="$(pactl list sinks | grep 'Volume' |awk 'FNR == 1 {print $5}')"
-	printf "%b" " $vol"
+	vol="$(pactl list sinks | grep '^[[:space:]]Volume:' | head -n $(( $SINK + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,')"
+	if (( $vol == 0 )); then
+		printf " $vol"
+	elif (( $vol >= 1 && $vol <= 15 )); then
+		printf " $vol"
+	elif (( $vol > 15  && $vol <= 65)); then
+		printf " $vol"
+	else
+		printf " $vol"
+	fi
 }
 
 bat(){
@@ -25,17 +28,17 @@ bat(){
   bat0="$(</sys/class/power_supply/BAT0/capacity)"
   bat1="$(</sys/class/power_supply/BAT1/capacity)"
   if [[ $onl -eq 0 && $bat0 -ge 15 ]] || [[ $onl -eq 0 && $bat1 -ge 15 ]]; then
-    printf " $bat0 $bat1"
-  elif [[ $onl -eq 0 && $bat0 -le 14 ]] || [[ $onl -eq 0 && $bat1 -le 14 ]]; then
     printf " $bat0 $bat1"
+  elif [[ $onl -eq 0 && $bat0 -le 14 ]] || [[ $onl -eq 0 && $bat1 -le 14 ]]; then
+    printf " $bat0 $bat1"
   else
-    printf " $bat0 $bat1"
+    printf " $bat0 $bat1"
   fi
 }
 
 mem(){
   mem="$(awk '/^Mem/ {print $3}' <(free -m))"
-  printf " $mem"
+  printf " $mem"
 }
 
 cpu(){
@@ -45,7 +48,7 @@ cpu(){
   read cpu a b c idle rest < /proc/stat
   total=$((a+b+c+idle))
   cpu="$((100*( (total-prevtotal) - (idle-previdle) ) / (total-prevtotal) ))"
-  printf " $cpu"
+  printf " $cpu"
 }
 
 hdd(){
@@ -82,4 +85,4 @@ temp(){
 }
 
 # Pipe to status bar
-xsetroot -name "$(music)  $(bat)  $(temp)  $(cpu)%  $(mem)  $(vol)  $(kb)  $(dte) "
+xsetroot -name "$(music) • $(bat) • $(temp) • $(cpu)% • $(mem) • $(vol) • $(kb) • $(dte) "
