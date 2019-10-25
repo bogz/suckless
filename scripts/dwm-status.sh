@@ -13,13 +13,13 @@ music(){
 vol(){
 	vol="$(pactl list sinks | grep '^[[:space:]]Volume:' | head -n $(( $SINK + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,')"
 	if (( $vol == 0 )); then
-		printf " $vol"
+		printf "%b" " $vol%"
 	elif (( $vol >= 1 && $vol <= 15 )); then
-		printf " $vol"
+		printf "%b" " $vol%"
 	elif (( $vol > 15  && $vol <= 65)); then
-		printf " $vol"
+		printf " $vol%"
 	else
-		printf " $vol"
+		printf "%b" " $vol%"
 	fi
 }
 
@@ -38,7 +38,7 @@ bat(){
 
 mem(){
   mem="$(awk '/^Mem/ {print $3}' <(free -m))"
-  printf " $mem"
+  printf " $mem"
 }
 
 cpu(){
@@ -48,19 +48,19 @@ cpu(){
   read cpu a b c idle rest < /proc/stat
   total=$((a+b+c+idle))
   cpu="$((100*( (total-prevtotal) - (idle-previdle) ) / (total-prevtotal) ))"
-  printf " $cpu"
+  printf " $cpu"
 }
 
 hdd(){
     hd=( $(awk '
-        {i=$5} /boot/ {a=i}; /root/ {b=i}; /home/ {c=i}; /media/&&!/sr0/ {d=i}
+        {i=$5} /root/ {a=i}; /home/ {b=i}; /media/&&!/sr0/ {c=i}
             END {print (NR>=11) ? a" "b" "c" "d : a" "b" "c}
         ' <(df -P)) )
     drives="${#hd[@]}"
     if (( drives > 3 )); then
-        printf "%b " "${hd[@]:0:3} ${hd[@]:3:1}"
+        printf "%b " " ${hd[@]:0:3} ${hd[@]:3:1}"
     else
-        printf "%b " "${hd[@]}"
+        printf "%b " " ${hd[@]}"
     fi
 }
 
@@ -84,5 +84,14 @@ temp(){
 	fi
 }
 
+int(){
+	con="$(nmcli | grep -v p2p-dev-wlp3s0 | grep disconnected | cut -c 9-)"
+	if (( $con == "disconnected" )); then
+		printf "%b" " n/a"
+	else
+		printf "%b" " on"
+	fi
+}
+
 # Pipe to status bar
-xsetroot -name "$(music) • $(bat) • $(temp) • $(cpu)% • $(mem) • $(vol) • $(kb) • $(dte) "
+xsetroot -name "$(music) • $(bat) • $(temp) • $(cpu)% • $(mem) • $(hdd)• $(vol) • $(kb) • $(dte) • $(int)"
