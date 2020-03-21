@@ -33,7 +33,7 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "base", "net", "term", "code" , "vm"};
+static const char *tags[] = { "base", "net", "term", "code"};
 
 static const Rule rules[] = {
         /* xprop(1):
@@ -86,7 +86,7 @@ static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont,
 static const char *termcmd[]  = { "st", NULL };
 static const char *lockcmd[]  = { "slock", NULL };
 static const char *webcmd[]  = { "firefox-nightly", NULL};
-static const char *thunarcmd[]  = { "thunar", NULL };
+static const char *fmanagercmd[]  = { "nemo", NULL };
 static const char *rebootcmd[] = { "systemctl", "reboot", NULL };
 static const char *shutcmd[] = { "systemctl", "poweroff", NULL };
 static const char *suspcmd[] = { "systemctl", "suspend", NULL };
@@ -116,7 +116,7 @@ static Key keys[] = {
 	{ Mod1Mask,                     XK_Down,   spawn,          {.v = voldwncmd} },
 	{ MODKEY,                       XK_q,      spawn,          {.v = webcmd} },
 	{ MODKEY,			XK_w,	   spawn,	   {.v = turfcmd } },
-	{ MODKEY,                       XK_e,      spawn,          {.v = thunarcmd} },
+	{ MODKEY,                       XK_e,      spawn,          {.v = fmanagercmd} },
 	{ ControlMask|Mod1Mask,         XK_p,      spawn,          {.v = padcmd } },
 	{ ControlMask|Mod1Mask,		XK_u,	   spawn,	   {.v = tmuxcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
@@ -149,7 +149,6 @@ static Key keys[] = {
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
 	TAGKEYS(                        XK_4,                      3)
-	TAGKEYS(			XK_5,			   4)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 };
 
